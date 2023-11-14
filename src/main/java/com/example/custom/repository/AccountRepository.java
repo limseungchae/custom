@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.custom.repository;
 
-import com.example.demo.entity.Account;
+import com.example.custom.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

@@ -1,13 +1,13 @@
-package com.example.demo.service;
+package com.example.custom.service;
 
-import com.example.demo.entity.Account;
-import com.example.demo.entity.Custom;
-import com.example.demo.entity.Header;
-import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.CustomRepository;
-import com.example.demo.repository.CustomSpecification;
+import com.example.custom.entity.Account;
+import com.example.custom.entity.Custom;
+import com.example.custom.entity.Header;
+import com.example.custom.repository.AccountRepository;
+import com.example.custom.repository.CustomRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ public class CustomService {
 
     private final CustomRepository customRepository;
     private final AccountRepository accountRepository;
-    private final CustomSpecification customSpecification;
 
     // 등록
     @Transactional
@@ -59,7 +58,7 @@ public class CustomService {
 
     // 검색조회
     public List<Custom> searchList(Header<Custom> request) {
-        List<Custom> customerList = customSpecification.searchCustomList(request); // Custom 검색 조건에 따라 조회
+        List<Custom> customerList = searchCustomList(request); // Custom 검색 조건에 따라 조회
 
         if (customerList == null) {
             return new ArrayList<>(); // null일 경우 빈 리스트 반환
@@ -95,4 +94,65 @@ public class CustomService {
     public List<Custom> list() {
         return customRepository.findAll(); // 모든 Custom 엔티티 목록 조회
     }
+
+
+
+    // 검색기능
+    /**
+     * 사업자 번호에 대한 Specification을 생성합니다.
+     *
+     * @param busiNum 검색할 사업자 번호
+     * @return 사업자 번호를 기준으로 하는 Specification
+     */
+    public static Specification<Custom> equalBusiNum(String busiNum) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("busiNum"), busiNum);
+    }
+
+    /**
+     * 거래처명에 대한 Specification을 생성합니다.
+     *
+     * @param custom 검색할 거래처명
+     * @return 거래처명을 기준으로 하는 Specification
+     */
+    public static Specification<Custom> equalCustom(String custom) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("custom"), custom);
+    }
+
+    /**
+     * Header 내 Custom 데이터를 활용하여 조건 검색을 수행합니다.
+     *
+     * @param custom Header 내의 Custom 데이터
+     * @return 조건에 부합하는 Custom 엔티티 리스트
+     */
+    public List<Custom> searchCustomList(Header<Custom> custom){
+        Specification<Custom> spec = null;
+
+        // 사업자 번호에 따른 검색 조건
+        if(custom.getData().getBusiNum() != null){
+            String busiNum = custom.getData().getBusiNum().trim();
+
+            // 사업자 번호에 대한 Specification 추가
+            if(spec == null){
+                spec = Specification.where(CustomService.equalBusiNum(busiNum));
+            } else {
+                spec = spec.or(CustomService.equalBusiNum(busiNum));
+            }
+        }
+
+        // 거래처명에 따른 검색 조건
+        if(custom.getData().getCustom() != null){
+            // 거래처명에 대한 Specification 추가
+            if(spec == null){
+                spec = Specification.where(CustomService.equalCustom(custom.getData().getCustom().trim()));
+            } else {
+                spec = spec.or(CustomService.equalCustom(custom.getData().getCustom().trim()));
+            }
+        }
+
+        // Specification을 이용하여 Custom 엔티티를 검색합니다.
+        return customRepository.findAll(spec);
+    }
 }
+
+
+

@@ -1,8 +1,8 @@
-package com.example.demo.controller;
+package com.example.custom.controller;
 
-import com.example.demo.entity.Custom;
-import com.example.demo.entity.Header;
-import com.example.demo.service.CustomService;
+import com.example.custom.entity.Custom;
+import com.example.custom.entity.Header;
+import com.example.custom.service.CustomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
