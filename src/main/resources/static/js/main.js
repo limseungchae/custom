@@ -2,12 +2,19 @@
 // 거래처 리스트 가져오기
 axios.get('/api/list_custom')
     .then(function (response) {
+        // 전체 응답 로그
         console.log(response);
+
+        // 응답 데이터를 반복하며 테이블 작성
         for(let i in response.data){
             let busiNum = response.data[i].busiNum+'';
             let custom = response.data[i].custom;
+
+            // busiNum의 유형과 값 로그
             console.log(typeof(busiNum));
             console.log(busiNum);
+
+            // 테이블 행 생성 및 tbody에 추가
             let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail(\''+busiNum+'\')">').append(
                 '<td>' + busiNum.trim() + '</td>' +
                 '<td>'+ custom + '</td>' +
@@ -19,17 +26,22 @@ axios.get('/api/list_custom')
 
 // 조회 클릭(검색)
 function clickSerarchBtn(){
+    // 입력 필드에서 검색 매개변수 가져오기
     let searchNum = $('#busi_num_search_input').val();
     if(searchNum === '') searchNum = null;
 
     let searchCustom = $('#custom_search_input').val();
     if(searchCustom === '') searchCustom = null;
 
+    // 두 검색 매개변수가 모두 비어 있는지 확인하고 경고 표시
     if((searchNum === null || searchNum === '') && (searchCustom === null || searchCustom ==='')) alert('데이터를 입력해주세요.');
 
+
+    // 검색 매개변수 로그
     console.log(searchNum);
     console.log(searchCustom);
 
+    // 데이터 검색을 위해 POST 요청 생성
     axios.request({
         method: "POST",
         url: "/api/search_list",
@@ -41,13 +53,18 @@ function clickSerarchBtn(){
             }
         }
     }).then(function (response){
+        // 검색 응답 로그
         console.log(response);
+
+        // 데이터가 발견되면 테이블 업데이트, 그렇지 않으면 경고 표시
         if(response.data.length > 0) {
             $('.list_item').remove();
             for(let i in response.data){
                     let busiNum = response.data[i].busiNum+'';
                     let custom = response.data[i].custom;
-                    let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail('+busiNum+'num'+')">').append(
+
+                // 테이블 행 생성 및 tbody에 추가
+                let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail('+busiNum+'num'+')">').append(
                         '<td>' + busiNum.trim() + '</td>' +
                         '<td>'+ custom + '</td>' +
                         '</tr>'
@@ -62,11 +79,13 @@ function clickSerarchBtn(){
 
 // 화면 출력(디테일)
 function showDetail(busiNum){
+    // 선택한 사업자 번호 로그
     console.log(busiNum);
 
+    // 선택한 사업자 번호의 세부 정보를 가져오기 위해 GET 요청 생성
     axios.get('/api/read_custom/'+busiNum)
         .then(function (response){
-            // 버튼 활성화 & 비활성화
+            // 응답에서 버튼과 입력 필드의 활성화/비활성화 설정
             $('#btn_submit').prop('disabled',true);
             $('#btn_modify').prop('disabled',false);
             $('#btn_delete').prop('disabled',false);
@@ -76,7 +95,10 @@ function showDetail(busiNum){
             // 등록정보 비활성화
             $('#regi_info_man_input').prop('readonly', true);
 
+            // 응답 로그
             console.log(response);
+
+            // 응답에서 세부 정보 추출
             const busiNum = response.data.data.busiNum;
             const shortName = response.data.data.shortName;
             const custom = response.data.data.custom;
@@ -114,6 +136,7 @@ function showDetail(busiNum){
             const tradeBank = response.data.data.tradeBank;
             const accountNum = response.data.data.accountNum;
 
+            // 응답을 기반으로 입력 필드에 값 설정
             $('#curr_busi_num').val(busiNum); // 사업자번호 저장용
             $('#busi_num_input').val(busiNum.trim());    // input 박스용
             $('#short_input').val(shortName);
@@ -215,20 +238,24 @@ function sample6_execDaumPostcode() {
 
 // 팝업창 open
 function openPop() {
-    $(".layer").css("display","block"); //팝업창 display block
+    // 팝업을 표시하여 display 속성을 block으로 설정
+    $(".layer").css("display","block");
 }
 // 팝업창 닫기
 function closePop() {
+    // 팝업을 닫아 display 속성을 none으로 설정
     $(".layer").css("display","none");
 }
 // 팝업창 확인 버튼 실행
 function submitPop(){
+    // 드롭다운에서 선택한 국가 값을 가져와 해당 숨겨진 필드에 설정
     const country = $("#country_select option:selected").val();
     const eng = country.split(' ')[0];
     const kor = country.split(' ')[1];
     $("#country_eng").val(eng);
     $("#country_kor").val(kor);
 
+    // 팝업 닫기
     closePop();
 }
 
@@ -244,7 +271,7 @@ function reset(){
     // 등록정보 비활성화
     $('#regi_info_man_input').prop('readonly', false);
 
-    // input 값 초기화
+    // input(입력) 값 초기화
     $('#curr_busi_num').val('');
     $('#busi_num_input').val('');
     $('#short_input').val('');
@@ -282,12 +309,15 @@ function reset(){
 
 // 등록버튼 클릭
 function registCustom(){
+    // 등록을 위해 입력 필드에서 값을 가져오기
     let busiNum = $('#busi_num_input').val();
     const custom = $('#custom_input').val();
 
+    // 입력 값 유효성 검사 및 등록을 위한 POST 요청 생성
     if(busiNum==null || busiNum=='') { alert('사업자번호를 입력해주세요.') }
     else if(custom==null || custom=='') { alert('거래처명을 입력해주세요.') }
     else {  // 둘다 입력했을 경우
+        // (다른 유효성 검사 및 등록을 위한 유사한 코드)
         const shortName = $('#short_input').val();
         const ceo = $('#ceo_input').val();
         const chargePerson = $('#charge_person_input').val();
@@ -371,6 +401,7 @@ function registCustom(){
 
 // 수정 버튼 클릭
 function modifyCustom(){
+    // 수정을 위해 입력 필드에서 값을 가져오기
     const currBusiNum =  $('#curr_busi_num').val();
 
     const shortName = $('#short_input').val();
@@ -410,6 +441,7 @@ function modifyCustom(){
     const accountNum = $('#account_num_input').val();
 
     // 엑시오스 제출
+    // 값 유효성 검사 및 수정을 위한 PUT 요청 생성
     axios.request({
         method: "PUT",
         url: "/api/update_custom",
@@ -459,10 +491,14 @@ function modifyCustom(){
 
 // 삭제버튼 클릭
 function deleteCustom(){
+    // 삭제를 위해 현재 선택한 사업자 번호 가져오기
     const currBusiNum = $('#curr_busi_num').val();
+
+    // DELETE 요청 생성
     axios.delete('/api/delete_custom/'+currBusiNum)
         .then(function(response){
             console.log(response);
+            // 응답에 따라 성공 또는 실패 메시지 표시 후 페이지 리로드
             if(response.data.resultCode === 'ERROR')
                 alert('삭제실패했습니다.');
             else alert('삭제되었습니다.');

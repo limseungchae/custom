@@ -1,8 +1,7 @@
 package com.example.custom.controller;
 
-import com.example.custom.entity.Custom;
 import com.example.custom.entity.Header;
-import com.example.custom.repository.CustomApi;
+import com.example.custom.dto.CustomApi;
 import com.example.custom.service.CustomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -4,7 +4,7 @@ import com.example.custom.entity.Account;
 import com.example.custom.entity.Custom;
 import com.example.custom.entity.Header;
 import com.example.custom.repository.AccountRepository;
-import com.example.custom.repository.CustomApi;
+import com.example.custom.dto.CustomApi;
 import com.example.custom.repository.CustomRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

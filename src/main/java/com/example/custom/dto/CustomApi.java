@@ -1,4 +1,4 @@
-package com.example.custom.repository;
+package com.example.custom.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
