@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // Spring의 Service로 선언하여 bean으로 관리합니다
@@ -27,13 +25,24 @@ public class CustomService {
 
     // 등록 기능
     @Transactional
-    public Header<Custom> create(Header<Custom> request) {
-        // 요청에서 Custom 데이터를 가져옵니다
+    public Header<Map<String, Object>> create(Header<Custom> request) {
         Custom custom = request.getData();
-        // Custom 엔티티를 저장하고 저장된 엔티티를 반환합니다
-        Custom savedCustom = customRepository.save(custom);
-        return Header.OK(savedCustom);
+        Custom custom1 = customRepository.save(custom);
+
+        // Account 엔티티를 생성하고 저장합니다
+        Account account = new Account(); // Account 객체 생성
+        account.setBusiNum(custom.getBusiNum());
+
+        Account account1 = accountRepository.save(account);
+
+        // 저장된 Custom과 Account 엔티티를 Map으로 묶어 반환합니다
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("custom", custom1);
+        responseData.put("account", account1);
+
+        return Header.OK(responseData);
     }
+
 
     // 상세정보 조회
     @Transactional

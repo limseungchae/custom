@@ -1,8 +1,6 @@
 package com.example.custom.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +21,8 @@ import java.time.LocalDateTime;
 public class Custom {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)   // 자동증가
+    @JoinTable(name = "account")
+    @JoinColumn(name = "BUSI_NUM")
     @Column(name = "BUSI_NUM")
     private String busiNum;
 
@@ -100,9 +100,5 @@ public class Custom {
 
     @Column(name = "MODI_INFO_DATE")
     private LocalDateTime modiInfoDate;
-
-    private String factory;
-    private String tradeBank;
-    private String accountNum;
 }
 

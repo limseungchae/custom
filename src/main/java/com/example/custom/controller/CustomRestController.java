@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class CustomRestController {
 
     //등록
     @PostMapping("/api/regist_custom")
-    public Header<Custom> create(@RequestBody Header<Custom> request) {
+    public Header<Map<String, Object>> create(@RequestBody Header<Custom> request) {
         return customService.create(request);
     }
 
