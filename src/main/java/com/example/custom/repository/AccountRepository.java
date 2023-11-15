@@ -19,4 +19,6 @@ public interface AccountRepository extends JpaRepository<Account, String>, JpaSp
      * @return 사업자 번호와 연관된 Account 엔티티를 포함한 Optional
      */
     Optional<Account> getByBusiNum(String busiNum);
+
+    Account findByBusiNum(String busiNum);
 }

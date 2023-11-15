@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,13 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@DynamicUpdate
-@DynamicInsert
 public class Custom {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)   // 자동증가
-    @JoinTable(name = "account")
-    @JoinColumn(name = "BUSI_NUM")
     @Column(name = "BUSI_NUM")
     private String busiNum;
 

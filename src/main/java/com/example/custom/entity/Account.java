@@ -1,22 +1,16 @@
 package com.example.custom.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@DynamicUpdate
-@DynamicInsert
 public class Account {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)   // 자동증가
