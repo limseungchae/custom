@@ -294,11 +294,13 @@ public class CustomService {
 
         // 거래처명에 따른 검색 조건
         if (custom.getData().getCustom() != null) {
+            String cusTom = custom.getData().getCustom().trim();
+
             // 거래처명에 대한 Specification 추가
             if (spec == null) {
-                spec = Specification.where(CustomService.equalCustom(custom.getData().getCustom().trim()));
+                spec = Specification.where(CustomService.equalCustom(cusTom));
             } else {
-                spec = spec.or(CustomService.equalCustom(custom.getData().getCustom().trim()));
+                spec = spec.or(CustomService.equalCustom(cusTom));
             }
         }
 
