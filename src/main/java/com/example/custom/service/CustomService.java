@@ -119,9 +119,6 @@ public class CustomService {
                 .accountNum(account.getAccountNum())
                 .build();
     }
-
-
-
     // 수정 기능
     @Transactional
     public Header<CustomApi> update(Header<CustomApi> request) {
@@ -206,6 +203,8 @@ public class CustomService {
                 .build();
     }
 
+
+    // 주어진 문자열이 null이 아닌 경우 앞뒤 공백을 제거한 문자열을 반환합니다.
     private String trimIfNotNull(String value) {
         return value == null ? null : value.trim();
     }
