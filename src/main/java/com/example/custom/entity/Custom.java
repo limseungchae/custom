@@ -23,7 +23,7 @@ public class Custom {
     @Column(name = "CUSTOM")
     private String custom;
 
-    @Column(name = "SHORT_NAME")
+    @Column(name = "SHORT")
     private String shortName;
 
     @Column(name = "CEO")

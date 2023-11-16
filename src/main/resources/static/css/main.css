@@ -1,2 +1,9 @@
-
-html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, em, img, ins, small, strong, sub, sup, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, footer, header, nav, section, summary, time, mark { margin: 0; padding: 0; box-sizing: border-box; }
+/* CSS 리셋 코드: 일반적인 브라우저 스타일을 초기화합니다. */
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, em, img, ins, small, strong, sub, sup, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, footer, header, nav, section, summary, time, mark {
+    /* 마진을 0으로 설정하여 여백을 초기화합니다. */
+    margin: 0;
+    /* 패딩을 0으로 설정하여 내부 여백을 초기화합니다. */
+    padding: 0;
+    /* 상자 모델을 border-box로 설정하여 요소의 크기를 계산할 때 테두리와 패딩을 포함합니다. */
+    box-sizing: border-box;
+}
