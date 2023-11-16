@@ -70,7 +70,6 @@ public class CustomService {
 
 
     // 상세정보 조회
-    @Transactional
     public Header<CustomApi> read(String busiNum) {
         // 사업자 번호 길이가 20이 아닌 경우 처리
         if (busiNum.length() != 20) {
