@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface CustomRepository extends JpaRepository<Custom, String>, JpaSpecificationExecutor<Custom> {
 
     // 복수의 Custom 엔터티를 반환하는 Specification에 따라 모든 Custom 엔터티 목록을 가져옵니다.
-    @Override
     List<Custom> findAll(Specification<Custom> spec);
 
     // 주어진 사업자번호에 해당하는 Custom 엔터티를 반환합니다.

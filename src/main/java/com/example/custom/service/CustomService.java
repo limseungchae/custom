@@ -266,13 +266,13 @@ public class CustomService {
     }
 
     // 사양 조건에 따른 Custom 검색을 수행하는 메서드
-    public static Specification<Custom> equalBusiNum(String busiNum) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("busiNum"), busiNum);
+    public static Specification<Custom> likeBusiNum(String busiNum) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("busiNum"), "%" + busiNum + "%");
     }
 
     // 사양 조건에 따른 Custom 검색을 수행하는 메서드
-    public static Specification<Custom> equalCustom(String custom) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("custom"), custom);
+    public static Specification<Custom> likeCustom(String custom) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("custom"), "%" + custom + "%");
     }
 
     // Custom 검색을 수행하는 메서드
@@ -285,9 +285,9 @@ public class CustomService {
 
             // 사업자 번호에 대한 Specification 추가
             if (spec == null) {
-                spec = Specification.where(CustomService.equalBusiNum(busiNum));
+                spec = Specification.where(CustomService.likeBusiNum(busiNum));
             } else {
-                spec = spec.or(CustomService.equalBusiNum(busiNum));
+                spec = spec.or(CustomService.likeBusiNum(busiNum));
             }
         }
 
@@ -297,9 +297,9 @@ public class CustomService {
 
             // 거래처명에 대한 Specification 추가
             if (spec == null) {
-                spec = Specification.where(CustomService.equalCustom(cusTom));
+                spec = Specification.where(CustomService.likeCustom(cusTom));
             } else {
-                spec = spec.or(CustomService.equalCustom(cusTom));
+                spec = spec.or(CustomService.likeCustom(cusTom));
             }
         }
 
