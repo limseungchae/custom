@@ -169,6 +169,22 @@ function clickSerarchBtn(){
     }).then(function (response){
         // 검색 응답 로그
         // console.log(response);
+        console.log(response);
+        if(response.data.length > 0) {
+            $('.list_item').remove();
+            for(let i in response.data){
+                let busiNum = response.data[i].busiNum+'';
+                let custom = response.data[i].custom;
+                let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail('+busiNum+'num'+')">').append(
+                    '<td>' + busiNum.trim() + '</td>' +
+                    '<td>'+ custom + '</td>' +
+                    '</tr>'
+                );
+                $('.account_box tbody').append(tr);
+            }
+        } else {
+            alert('데이터가 존재하지 않습니다!')
+        }
     });
 }
 
