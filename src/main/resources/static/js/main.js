@@ -24,6 +24,120 @@ axios.get('/api/list_custom')
         }
     });
 
+// 화면 출력(디테일)
+function showDetail(busiNum) {
+    console.log(busiNum);
+
+    // axios를 사용하여 서버에 데이터를 요청합니다.
+    axios.get('/api/read_custom/' + busiNum)
+        .then(function (response) {
+            // 버튼 활성화 및 비활성화 처리
+            $('#btn_submit').prop('disabled', true);
+            $('#btn_modify').prop('disabled', false);
+            $('#btn_delete').prop('disabled', false);
+            $('#busi_num_input').prop('readonly', true); // 사업자번호 입력창 비활성화
+            // 변경정보 입력창 활성화
+            $('#modi_info_man_input').prop('readonly', false);
+            // 등록정보 입력창 비활성화
+            $('#regi_info_man_input').prop('readonly', true);
+
+            console.log(response);
+            // 서버에서 받은 데이터를 변수에 저장합니다.
+            const busiNum = response.data.data.busiNum;
+            const shortName = response.data.data.shortName;
+            const custom = response.data.data.custom;
+            const ceo = response.data.data.ceo;
+            const chargePerson = response.data.data.chargePerson;
+            const busiCondition = response.data.data.busiCondition;
+            const item = response.data.data.item;
+            const postNum = response.data.data.postNum;
+            const addr1 = response.data.data.addr1;
+            const addr2 = response.data.data.addr2;
+            const tel = response.data.data.tel;
+            const fax = response.data.data.fax;
+            const homepage = response.data.data.homepage;
+            const coYn = response.data.data.coYn;
+            const foreignYn = response.data.data.foreignYn;
+            const taxYn = response.data.data.taxYn;
+            const countryEng = response.data.data.countryEng;
+            const countryKor = response.data.data.countryKor;
+            const specialRelation = response.data.data.specialRelation; // 0 or 1
+            const tradeStop = response.data.data.tradeStop; // 0 or 1
+            let contractPeriodS = response.data.data.contractPeriodS; // date
+            if (contractPeriodS != null) {
+                contractPeriodS = contractPeriodS.slice(0, 10);
+            }
+            let contractPeriodE = response.data.data.contractPeriodE; // date
+            if (contractPeriodS != null) {
+                contractPeriodE = contractPeriodE.slice(0, 10);
+            }
+            const regiInfoMan = response.data.data.regiInfoMan;
+            const regiInfoDate = response.data.data.regiInfoDate; // date
+            const modiInfoMan = response.data.data.modiInfoMan;
+            const modiInfoDate = response.data.data.modiInfoDate; // date
+
+            const factory = response.data.data.factory;
+            const tradeBank = response.data.data.tradeBank;
+            const accountNum = response.data.data.accountNum;
+
+            // 화면에 서버에서 받은 데이터를 출력합니다.
+            $('#curr_busi_num').val(busiNum); // 사업자번호 저장용
+            $('#busi_num_input').val(busiNum.trim()); // input 박스용
+            $('#short_input').val(shortName);
+            $('#custom_input').val(custom);
+            $('#ceo_input').val(ceo);
+            $('#charge_person_input').val(chargePerson);
+            $('#busi_condition_input').val(busiCondition);
+            $('#item_input').val(item);
+            $('#post_num_input').val(postNum);
+            $('#addr1_input').val(addr1);
+            $('#addr2_input').val(addr2);
+            $('#tel_input').val(tel);
+            $('#fax_input').val(fax);
+            $('#homepage_input').val(homepage);
+            if (coYn === 1) {
+                $("input:radio[name='corp']:radio[value='1']").prop('checked', true);
+            } else {
+                $("input:radio[name='corp']:radio[value='0']").prop('checked', true);
+            }
+            if (foreignYn === 1) {
+                $("input:radio[name='foreign']:radio[value='1']").prop('checked', true);
+            } else {
+                $("input:radio[name='foreign']:radio[value='0']").prop('checked', true);
+            }
+            if (taxYn === 1) {
+                $('#select_tax').val('1').prop("selected", true);
+            } else {
+                $('#select_tax').val('0').prop("selected", true);
+            }
+            $('#country_eng').val(countryEng);
+            $('#country_kor').val(countryKor);
+            switch (countryKor) {
+                case '대한민국':
+                    $('#country_select').val('KOR 대한민국').prop("selected", true);
+                    break;
+                case '미국':
+                    $('#country_select').val('USA 미국').prop("selected", true);
+                    break;
+            }
+            if (specialRelation === 1) {
+                $('input:checkbox[name="special_relation"]').prop('checked', true);
+            } else $('input:checkbox[name="special_relation"]').prop('checked', false);
+            if (tradeStop === 1) {
+                $('input:checkbox[name="trade_stop"]').prop('checked', true);
+            } else $('input:checkbox[name="trade_stop"]').prop('checked', false);
+            $('#contract_period_s_input').val(contractPeriodS);
+            $('#contract_period_e_input').val(contractPeriodE);
+            $('#regi_info_man_input').val(regiInfoMan);
+            $('#regi_info_date_input').val(regiInfoDate);
+            $('#modi_info_man_input').val(modiInfoMan);
+            $('#modi_info_date_input').val(modiInfoDate);
+            $('#factory_input').val(factory);
+            $('#trade_bank_input').val(tradeBank);
+            $('#account_num_input').val(accountNum);
+        });
+}
+
 // 조회 클릭(검색)
 function clickSerarchBtn(){
     // 입력 필드에서 검색 매개변수 가져오기
