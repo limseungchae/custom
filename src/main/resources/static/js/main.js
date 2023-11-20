@@ -460,3 +460,27 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+
+// 팝업창 열기
+function openPop() {
+    $(".layer").css("display", "block"); // 팝업창을 화면에 보이도록 설정
+}
+
+// 팝업창 닫기
+function closePop() {
+    $(".layer").css("display", "none"); // 팝업창을 화면에서 감추도록 설정
+}
+
+// 팝업창 확인 버튼 동작
+function submitPop() {
+    // 선택한 국가의 영문명과 한글명을 가져와서 해당 필드에 설정
+    const country = $("#country_select option:selected").val();
+    const eng = country.split(' ')[0];
+    const kor = country.split(' ')[1];
+    $("#country_eng").val(eng);
+    $("#country_kor").val(kor);
+
+    // 팝업창 닫기
+    closePop();
+}
+
