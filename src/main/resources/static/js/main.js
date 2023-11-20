@@ -14,12 +14,15 @@ axios.get('/api/list_custom')
             // console.log(typeof(busiNum));
             // console.log(busiNum);
 
-            // 테이블 행 생성 및 tbody에 추가
-            let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail(\''+busiNum+'\')">').append(
-                '<td>' + busiNum.trim() + '</td>' +
+            // 테이블 행 생성 및 tbody에 추가 // 새로운 <tr> 요소를 동적으로 생성합니다.
+            let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail(\'' + busiNum + '\')">').append(
+                // <tr> 요소에 <td> 자식 요소들을 추가합니다.
+            '<td>' + busiNum.trim() + '</td>' +
                 '<td>'+ custom + '</td>' +
                 '</tr>'
             );
+
+            // 생성한 <tr> 요소를 테이블의 tbody에 추가합니다.
             $('.account_box tbody').append(tr);
         }
     });
@@ -168,22 +171,33 @@ function clickSerarchBtn(){
         }
     }).then(function (response){
         // 검색 응답 로그
-        // console.log(response);
+// console.log(response);
         console.log(response);
-        if(response.data.length > 0) {
+
+// 만약 응답 데이터의 길이가 0보다 크면(검색 결과가 존재하면)
+        if (response.data.length > 0) {
+            // 테이블에서 기존의 거래처 목록을 제거합니다.
             $('.list_item').remove();
-            for(let i in response.data){
-                let busiNum = response.data[i].busiNum+'';
+
+            // 검색 결과 데이터를 반복하며 각 거래처에 대한 <tr>을 동적으로 생성하여 추가합니다.
+            for (let i in response.data) {
+                let busiNum = response.data[i].busiNum + '';
                 let custom = response.data[i].custom;
-                let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail('+busiNum+'num'+')">').append(
+
+                // 새로운 <tr> 요소를 동적으로 생성합니다.
+                let tr = $('<tr class="list_item" style="cursor: pointer;" onclick="showDetail(\'' + busiNum + '\')">').append(
+                    // <tr> 요소에 <td> 자식 요소들을 추가합니다.
                     '<td>' + busiNum.trim() + '</td>' +
-                    '<td>'+ custom + '</td>' +
+                    '<td>' + custom + '</td>' +
                     '</tr>'
                 );
+
+                // 생성한 <tr> 요소를 테이블의 tbody에 추가합니다.
                 $('.account_box tbody').append(tr);
             }
         } else {
-            alert('데이터가 존재하지 않습니다!')
+            // 검색 결과가 없는 경우 알림을 표시합니다.
+            alert('데이터가 존재하지 않습니다!');
         }
     });
 }
