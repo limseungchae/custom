@@ -1,7 +1,9 @@
 USE CUSTOM;
-
+```sql
 CREATE DATABASE CUSTOM;
+```
 # 거래처 테이블
+```sql
 CREATE TABLE CUSTOM
 (
 BUSI_NUM          CHAR(20) NOT NULL,
@@ -31,7 +33,8 @@ REGI_INFO_DATE    DATE,
 MODI_INFO_MAN     CHAR(10),
 MODI_INFO_DATE    DATE
 );
-
+```
+```sql
 # 계좌정보 테이블
 CREATE TABLE ACCOUNT
 (
@@ -41,4 +44,5 @@ TRADE_BANK  CHAR(20),
 ACCOUNT_NUM CHAR(20),
 PRIMARY KEY (BUSI_NUM)
 );
+```
 
