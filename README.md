@@ -1,4 +1,8 @@
+# 스키마 설정
+```sql
 USE CUSTOM;
+```
+# 테이블 생성
 ```sql
 CREATE DATABASE CUSTOM;
 ```
@@ -34,8 +38,9 @@ MODI_INFO_MAN     CHAR(10),
 MODI_INFO_DATE    DATE
 );
 ```
-```sql
+
 # 계좌정보 테이블
+```sql
 CREATE TABLE ACCOUNT
 (
 BUSI_NUM    CHAR(20) NOT NULL,
